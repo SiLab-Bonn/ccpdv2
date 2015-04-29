@@ -1,0 +1,335 @@
+
+
+---
+name    : mio_gpac
+version : 2.0.0
+
+transfer_layer:
+    - name  : USB
+      type  : SiUsb
+      #bit_file : ../device/bit/ccpdv2.bit
+      bit_file : D:\workspace\hcmos_trunk\device\bit\ccpdv2.bit
+
+#    - name : serial
+#      type : SerialDummy
+
+hw_drivers:
+  - name      : GPAC
+    type      : GPAC
+    interface : USB
+    base_addr : 0x00000
+
+    
+  - name      : cmd
+    type      : cmd_seq
+    interface : USB
+    base_addr : 0x10000
+  - name      : tlu
+    type      : tlu
+    interface : USB
+    base_addr : 0x18200
+  - name      : rx_fe
+    type      : fei4_rx
+    interface : USB
+    base_addr : 0x18300
+  - name      : tdc_rx2
+    type      : tdc_s3
+    interface : USB
+    base_addr : 0x18700
+
+
+  - name      : CCPD_GLOBAL_SPI
+    type      : spi
+    interface : USB
+    base_addr : 0x18980
+    mem_bytes : 15
+  - name      : CCPD_CONFIG_SPI
+    type      : spi
+    interface : USB
+    base_addr : 0x19000
+    mem_bytes : 54
+  - name      : CCPD_INJ_PULSE
+    type      : pulse_gen
+    interface : USB
+    base_addr : 0x18A80
+  - name      : CCPD_TDCGATE_PULSE
+    type      : pulse_gen
+    interface : USB
+    base_addr : 0x18A00
+  - name      : CCPD_TDC
+    type      : tdc_s3
+    interface : USB
+    base_addr : 0x19100
+
+  - name      : sram
+    type      : sram_fifo
+    interface : USB
+    base_addr : 0x18100
+    base_data_addr : 0x0001000000000000
+  - name      : gpio_rx
+    type      : gpio
+    interface : USB
+    base_addr : 0x18800
+
+#  - name      : HV
+#    type      : shq122m
+#    interface : serial
+#    port : \\.\COM5
+    
+    
+user_drivers:
+
+registers:
+  - name        : rx
+    type        : StdRegister
+    hw_driver   : gpio_rx
+    size        : 8
+    fields:
+      - name    : EX_SEL
+        size    : 1
+        offset  : 5
+      - name    : HITMON_SEL
+        size    : 1
+        offset  : 4
+      - name    : CCPD_TDC
+        size    : 1
+        offset  : 3
+      - name    : TDC
+        size    : 1
+        offset  : 2
+      - name    : TLU
+        size    : 1
+        offset  : 1
+      - name    : FE
+        size    : 1
+        offset  : 0
+
+  - name        : CCPD_Vdd
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [value]
+    arg_add     : {'channel': 'PWR0'}
+
+  - name        : V_in
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [value]
+    arg_add     : {'channel': 'PWR1'}
+
+  - name        : CCPD_Vssa
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [value]
+    arg_add     : {'channel': 'PWR2'}
+
+  - name        : CCPD_VGate
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [value]
+    arg_add     : {'channel': 'PWR3'}
+    
+  - name        : CCPD_Vcasc
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'VSRC0'}
+  - name        : PCB_Th
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'VSRC1'}
+  - name        : CCPD_BL
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'VSRC2'}
+  - name        : CCPD_Th
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'VSRC3'}
+    
+  - name        : CCPD_Injection_low
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'INJ1'}
+  - name        : CCPD_Injection_high
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'INJ0'}
+
+
+  - name        : CCPD_GLOBAL
+    type        : StdRegister
+    hw_driver   : CCPD_GLOBAL_SPI
+    size        : 120
+    fields:
+        - name     : EnPosFB
+          size     : 1
+          offset   : 119
+        - name     : EnPullUp
+          size     : 1
+          offset   : 118
+        - name     : VNBias
+          size     : 6
+          offset   : 113
+          bit_order: [2,0,1,3,4,5]
+        - name     : VPFoll
+          size     : 6
+          offset   : 107
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNBuffer
+          size     : 6
+          offset   : 101
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNCOut3
+          size     : 6
+          offset   : 95
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNCOut2
+          size     : 6
+          offset   : 89
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNCOut1
+          size     : 6
+          offset   : 83
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNCompLd
+          size     : 6
+          offset   : 77
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNComp
+          size     : 6
+          offset   : 71
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNOut
+          size     : 6
+          offset   : 65
+          bit_order: [2,0,1,3,4,5]
+        - name     : ThP
+          size     : 6
+          offset   : 59
+          bit_order: [2,0,1,3,4,5]
+        - name     : ThPRes
+          size     : 6
+          offset   : 53
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNDAC
+          size     : 6
+          offset   : 47
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNLoad
+          size     : 6
+          offset   : 41
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNFoll
+          size     : 6
+          offset   : 35
+          bit_order: [2,0,1,3,4,5]
+        - name     : VNFB
+          size     : 6
+          offset   : 29
+          bit_order: [2,0,1,3,4,5]
+        - name     : VN2
+          size     : 6
+          offset   : 23
+          bit_order: [2,0,1,3,4,5]
+        - name     : VN
+          size     : 6
+          offset   : 17
+          bit_order: [2,0,1,3,4,5]
+        - name     : ThRes
+          size     : 6
+          offset   : 11
+          bit_order: [2,0,1,3,4,5]
+        - name     : BLRes
+          size     : 6
+          offset   : 5
+          bit_order: [2,0,1,3,4,5]
+
+  - name        : CCPD_CONFIG
+    type        : StdRegister
+    hw_driver   : CCPD_CONFIG_SPI
+    size        : 432
+    auto_start  : True
+    fields:
+          - name   : COLUMN
+            offset : 431
+            size   : 12
+            repeat : 20
+            fields  : 
+            - name     : ao
+              size     : 1
+              offset   : 11
+            - name     : dc
+              size     : 1
+              offset   : 10
+            - name     : Ld2
+              size     : 1
+              offset   : 9
+            - name     : Ld1
+              size     : 1
+              offset   : 8
+            - name     : Ld0
+              size     : 1
+              offset   : 7
+            - name     : Str
+              size     : 1
+              offset   : 6
+            - name     : R2
+              size     : 1
+              offset   : 5
+            - name     : L2
+              size     : 1
+              offset   : 4
+            - name     : R1
+              size     : 1
+              offset   : 3
+            - name     : L1
+              size     : 1
+              offset   : 2
+            - name     : R0
+              size     : 1
+              offset   : 1
+            - name     : L0
+              size     : 1
+              offset   : 0
+          - name   : ROW
+            offset : 191
+            size   : 16
+            repeat : 12
+            fields  :
+            - name     : En0
+              size     : 1
+              offset   : 15
+            - name     : En1
+              size     : 1
+              offset   : 14
+            - name     : En2
+              size     : 1
+              offset   : 13
+            - name     : En3
+              size     : 1
+              offset   : 12
+            - name     : En4
+              size     : 1
+              offset   : 11
+            - name     : En5
+              size     : 1
+              offset   : 10
+            - name     : InL
+              bit_order: [0,1,2,3]
+              size     : 4
+              offset   : 9
+            - name     : EnL
+              size     : 1
+              offset   : 5
+            - name     : InR
+              bit_order: [0,1,2,3]
+              size     : 4
+              offset   : 4
+            - name     : EnR
+              size     : 1
+              offset   : 0
