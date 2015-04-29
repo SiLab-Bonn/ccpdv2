@@ -7,8 +7,7 @@ version : 2.0.0
 transfer_layer:
     - name  : USB
       type  : SiUsb
-      #bit_file : ../device/bit/ccpdv2.bit
-      bit_file : D:\workspace\hcmos_trunk\device\bit\ccpdv2.bit
+      bit_file : ../device/bit/ccpdv2.bit
 
 #    - name : serial
 #      type : SerialDummy

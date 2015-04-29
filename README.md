@@ -2,9 +2,22 @@
 scripts for testing HV2FEI4 v2
 
 ##Installation
-Install basil and pybar. Then, get a copy of ccpdv2
+###Install basil and pybar
 - basile: https://github.com/SiLab-Bonn/basil
 - pybar: https://github.com/SiLab-Bonn/pyBAR
+###get a copy of ccpdv2
+###configure pybar
+change confiuration files
+- configuration.yaml
+```yaml
+dut: <path to ccpdv2.yaml>
+dut_configuration : dut_configuration_mio_gpac.yaml 
+```
+- dut_configuration_mio_gpac.yaml
+```yaml
+USB:
+    bit_file       : "<path to ccpdv2.bit>"
+```
 
 ##Quick start
 - execute ipython.bat or ipython.sh
