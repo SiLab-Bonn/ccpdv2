@@ -7,9 +7,9 @@ scripts for testing HV2FEI4 v2
 ### Install basil and pybar
 
 - basile: https://github.com/SiLab-Bonn/basil 
--- rev 999 14:59:07, Montag, 27. April 2015
+  - rev 999 14:59:07, Montag, 27. April 2015
 - pybar: https://github.com/SiLab-Bonn/pyBAR
--- rev 2627 12:00:15, Mittwoch, 22. April 2015
+  - rev 2627 12:00:15, Mittwoch, 22. April 2015
 
 ### Get a copy of ccpdv2
 
