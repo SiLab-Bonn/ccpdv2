@@ -1,13 +1,19 @@
 #ccpdv2
+
 scripts for testing HV2FEI4 v2
 
 ##Installation
+
 ### Install basil and pybar
+
 - basile: https://github.com/SiLab-Bonn/basil
 - pybar: https://github.com/SiLab-Bonn/pyBAR
+
 ### Get a copy of ccpdv2
+
 ### Configure pybar
-change confiuration files
+
+change configuration files
 - configuration.yaml
 ```yaml
 dut: <path to ccpdv2.yaml>
@@ -20,6 +26,7 @@ USB:
 ```
 
 ##Quick start
+
 - execute ipython.bat or ipython.sh
 - import ccpdv2, make a instace of ccpdv2.Ccpdv2Fei4, and initiarize
 ```python
