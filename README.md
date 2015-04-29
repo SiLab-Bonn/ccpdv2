@@ -6,8 +6,8 @@ scripts for testing HV2FEI4 v2
 Installation
 =============
 Install basil and pybar. Then, get a copy of ccpdv2
-basile: https://github.com/SiLab-Bonn/basil
-pybar: https://github.com/SiLab-Bonn/pyBAR
+-basile: https://github.com/SiLab-Bonn/basil
+-pybar: https://github.com/SiLab-Bonn/pyBAR
 
 Quick start
 =============
@@ -18,7 +18,7 @@ Quick start
    c=ccpdv2.Ccpdv2Fei4()
    c.init_with_fei4()
 ```
--set paramters
+-set parameters
 ```python
    c.set(VNCOut0=0,th=0.9....)
 ```
