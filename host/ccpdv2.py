@@ -11,6 +11,7 @@ from pybar.run_manager import RunManager
 from pybar.scans.scan_init import InitScan
 from pybar.scans.scan_ext_trigger import ExtTriggerScan
 from pybar.scans.scan_fei4_self_trigger import FEI4SelfTriggerScan
+from pybar.scans.tune_threshold_baseline import ThresholdBaselineTuning
 import progressbar
 
 class HvcmosScan(ExtTriggerScan):
@@ -211,12 +212,7 @@ class Ccpdv2Fei4():
         self.rmg.run_run(InitScan)
         self.dut=self.rmg.conf["dut"]
         self.init()
-    def __init__(self):
-        print "INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO"
-        print "INFO                                                                                                INFO"
-        print "INFO read back of DACs of GPAC might not work... In that case, changing basil's version might help  INFO"
-        print "INFO                                                                                                INFO"
-        print "INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO"            
+    def __init__(self):    
         ### init logging
         self.l=ccpdv2_logging()
         self.dut=None
@@ -410,7 +406,8 @@ class Ccpdv2Fei4():
                 print i,th_list[0:10]
             self.th=th_list[i]
             self.put_th(th=self.th)
-            th=self.get_th()
+            #th=self.get_th()
+            th=self.th
             data=self.measure(self.exp)
             tdc,tdc_std,cnt,cnt_all,data=self.analyze(data)
             if (self.dataformat & 0x2)!=0:
@@ -1207,7 +1204,7 @@ class Ccpdv2Fei4():
           'Th_i':self.dut["CCPD_Th"].get_current(unit="mA"),
           'PCB_Th_v':self.dut["PCB_Th"].get_voltage(unit="V"),
           'PCB_Th_i':self.dut["PCB_Th"].get_current(unit="mA"),
-          'RX_direction':self.dut["rx"].get_direction(addr=0x0),
+          #'RX_output_en':self.dut["rx"].get_output_en()[0],
           'RX_data':str(self.dut["rx"].get_data())}
     def measure(self,exp):
         if exp>0.0001:
@@ -1220,14 +1217,23 @@ class Ccpdv2Fei4():
         else:
             data=self.get_data()
         return data
-    def start_scan(self,scan="Ext"):
-        if scan=="Ext":
-            self.rmg.run_run(HvcmosScan,use_thread=True)
+    def run_fei4scan(self,scan="Ext"):
+        if scan=="ext":
+            self.rmg.run_run(HvcmosScan)
+        elif scan=="tune":
+            
+            self.rmg.run_run(ThresholdBaselineTuning)
+        elif scan=="self":
+            self.rmg.run_run(HvcmosSelfScan)
         else:
-            self.rmg.run_run(HvcmosSelfScan,use_thread=True)
+            print "scan have to be ext, self, or tune"
+            return
+         
         filename=self.get_fei4file()
-        self.l.append("HvcmosScan:%f"%filename)
-        print np.asarray(load_fei4data("%s_interpreted.h5"%filename,dataname="HistOcc"),int)
+        self.l.append("FEI4Scan:%f"%filename)
+        if scan=="ext" or scan=="self":
+            print np.asarray(load_fei4data("%s_interpreted.h5"%filename,dataname="HistOcc"),int)
+        
     def tune_with_fei4(self,th=0.9,VNDAC=10,VNCout=4):
         print "WARNING WARNING WARNING WARNING WARNING WARNING WARNING"
         print "WRNING   This tuning algorithm is not robust    WARNING"
