@@ -48,21 +48,21 @@ all parameters can be set by the function "set()"
 ```python
    c.set(mode="hitmon")
 ```
-  - mode="ccpd"
-    - FEI4 readout : OFF
-    - TDC of Monitor of ccpd : ON
-  - mode="rj45"
-    - FEI4 readout : OFF
-    - TDC of Monitor of ccpd : ON
-    - External trigger of FEI4 : TLU(RJ45 connector) or LEMO
-  - mode="inj" :
-    - FEI4 readout : OFF
-    - TDC of Monitor of ccpd : OFF
-    - External trigger of FEI4 : injection of ccpd (INJECTION of GPAC)
-  - mode="hitmon" :
-    - FEI4 readout : OFF
-    - TDC of Monitor of ccpd : OFF
-    - External trigger of FEI4 : HIT_OR of FEI4
+    - mode="ccpd"
+      - FEI4 readout : OFF
+      - TDC of Monitor of ccpd : ON
+    - mode="rj45"
+      - FEI4 readout : OFF
+      - TDC of Monitor of ccpd : ON
+      - External trigger of FEI4 : TLU(RJ45 connector) or LEMO
+    - mode="inj" :
+      - FEI4 readout : OFF
+      - TDC of Monitor of ccpd : OFF
+      - External trigger of FEI4 : injection of ccpd (INJECTION of GPAC)
+    - mode="hitmon" :
+      - FEI4 readout : OFF
+      - TDC of Monitor of ccpd : OFF
+      - External trigger of FEI4 : HIT_OR of FEI4
 - find noise edge
 ```python
    c.find_noise()
