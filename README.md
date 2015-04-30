@@ -8,9 +8,10 @@ scripts for testing HV2FEI4 v2
 
 - basile: https://github.com/SiLab-Bonn/basil 
   - rev 1011 14:59:07, Montag, 27. April 2015
+  - branch development
 - pybar: https://github.com/SiLab-Bonn/pyBAR
   - rev 2627 12:00:15, Mittwoch, 22. April 2015
-
+  - branch development
 ### Get a copy of ccpdv2
 
 ccpdv2: https://github.com/SiLab-Bonn/ccpdv2
