@@ -1,8 +1,8 @@
-#ccpdv2
+# ccpdv2
 
 scripts for testing HV2FEI4 v2
 
-##Installation
+## Installation
 
 ### Install basil and pybar
 
@@ -12,6 +12,7 @@ scripts for testing HV2FEI4 v2
 - pybar: https://github.com/SiLab-Bonn/pyBAR
   - rev 2627 12:00:15, Mittwoch, 22. April 2015
   - branch development
+
 ### Get a copy of ccpdv2
 
 ccpdv2: https://github.com/SiLab-Bonn/ccpdv2
