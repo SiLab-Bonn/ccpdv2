@@ -6,7 +6,7 @@ scripts for testing HV2FEI4 v2
 
 ### Install basil and pybar
 
-- basile: https://github.com/SiLab-Bonn/basil 
+- basil: https://github.com/SiLab-Bonn/basil 
   - rev 1011 14:59:07, Montag, 27. April 2015
   - branch development
 - pybar: https://github.com/SiLab-Bonn/pyBAR
